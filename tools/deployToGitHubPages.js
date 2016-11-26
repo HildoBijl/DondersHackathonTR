@@ -12,9 +12,9 @@ import run from './run';
 import build from './build';
 
 const remote = {
-  name: 'github',
-  url: 'https://github.com/{user}/{repo}.git',
-  branch: 'gh-pages',
+  name: 'heroku',
+  url: 'https://git.heroku.com/teamrandom.git',
+  branch: 'master',
 };
 
 /**
@@ -23,7 +23,7 @@ const remote = {
 async function deployToGitHubPages() {
   // Initialize a new Git repository inside the `/build` folder
   // if it doesn't exist yet
-  const repo = await GitRepo.open('build/public', { init: true });
+  const repo = await GitRepo.open('build', { init: true });
   await repo.setRemote(remote.name, remote.url);
   const isRefExists = await repo.hasRef(remote.url, remote.branch);
   if (isRefExists) {
@@ -34,7 +34,8 @@ async function deployToGitHubPages() {
 
   // Build the project in RELEASE mode which
   // generates optimized and minimized bundles
-  process.argv.push('--static', '--release');
+  // process.argv.push('--static', '--release');
+  process.argv.push('--release');
   await run(build);
 
   // Push the contents of the build folder to the remote server via Git
