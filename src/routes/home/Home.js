@@ -129,7 +129,6 @@ class Home extends React.Component {
     ]
   }
   render() {
-    console.log('Rendering with stage ' + this.state.stage)
     let element;
     switch (this.state.stage) {
       case 0:
@@ -185,7 +184,6 @@ class Home extends React.Component {
     this.setState({articleIndex: articleIndex, stage: 2})
   }
   goToNextStage() {
-    console.log('GoToNext')
     this.setState({stage: this.state.stage + 1})
   }
 }
@@ -467,7 +465,7 @@ class Collocation extends React.Component {
       <p>Of the words that you just learned, fill in the right one. It is the word that often ...</p>
         <div className={s.collLeft}>
           <p className={s.collTitle}>follows after:</p>
-          {pre.map((item, index) => { return <p key={index} className={s.collPrePost} onClick={(evt) => this.clickOnPre(index, evt)}><span>{item}</span></p>})}
+          {pre.map((item, index) => { return <p key={index} className={s.collPrePost}><span onClick={(evt) => this.clickOnPre(index, evt)}>{item}</span></p>})}
         </div>
         <div className={s.collMid}>
           <p className={s.collTitle}>&nbsp;</p>
@@ -482,7 +480,7 @@ class Collocation extends React.Component {
         </div>
         <div className={s.collRight}>
           <p className={s.collTitle}>comes before:</p>
-          {post.map((item, index) => { return <p key={index} className={s.collPrePost} onClick={(evt) => this.clickOnPost(index, evt)}><span>{item}</span></p>})}
+          {post.map((item, index) => { return <p key={index} className={s.collPrePost}><span onClick={(evt) => this.clickOnPost(index, evt)}>{item}</span></p>})}
         </div>
       </div>
     )
@@ -519,7 +517,6 @@ class Collocation extends React.Component {
     let index = [0,3][stage]
     let correctWord = this.props.article.wordsEN[index]
     let word = $('#entry').val().toLowerCase()
-    console.log('Between ' + word + ' and ' + correctWord + ' is a distance of ' + getStringDistance(word,correctWord))
     if (word.length == 0) {
       return
     }
@@ -530,7 +527,6 @@ class Collocation extends React.Component {
     $('.' + s.collAnswer).css('display','block')
     $('.' + s.collContinue + ' span').html('Continue')
     $('#entry').css('background',color)
-    console.log('processing word ' + word)
   }
   finalize() {
     $('#entry').val('')
