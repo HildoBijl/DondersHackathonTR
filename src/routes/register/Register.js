@@ -21,7 +21,7 @@ class Register extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
-          <p>...</p>
+          <p>Registration is impossible at this moment. Please check back later.</p>
         </div>
       </div>
     );

@@ -21,7 +21,13 @@ class Contact extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
-          <p>...</p>
+          <p>You can reach Team Random through contact person <strong>Hildo Bijl</strong>.</p>
+          <ul>
+            <li>Phone: 0628579660</li>
+            <li>Email: hildobijl@gmail.com</li>
+            <li>Location: find us at the north-east corner of the hacking room</li>
+            <li>In case of emergency: just yell "I need random people!" and people will come and help you. It's just probably not us.</li>
+          </ul>
         </div>
       </div>
     );
