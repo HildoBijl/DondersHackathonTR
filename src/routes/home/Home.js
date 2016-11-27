@@ -15,14 +15,14 @@ import $ from 'jquery';
 class Home extends React.Component {
   constructor() {
     super()
-    // this.state = {
-    //   stage: 0
-    // }
     this.state = {
-      stage: 3,
-      input: 'I am smelling an apple pie. Hungry...',
-      articleIndex: 5
+      stage: 0
     }
+    // this.state = {
+    //   stage: 5,
+    //   input: 'I am smelling an apple pie. Hungry...',
+    //   articleIndex: 5
+    // }
     this.articles = [
       {
         title: 'The anatomy of smelling',
@@ -159,7 +159,9 @@ class Home extends React.Component {
         />
         break;
       case 5:
-        element = <h1 className={s.title}>We'll still put some statistics here</h1>
+        element = <Statistics
+          reset={this.reset.bind(this)}
+        />
         break;
       default:
         element = <h1 className={s.title}>We're still building this page... Do check back later!</h1>
@@ -185,6 +187,9 @@ class Home extends React.Component {
   }
   goToNextStage() {
     this.setState({stage: this.state.stage + 1})
+  }
+  reset() {
+    this.setState({stage: 0})
   }
 }
 
@@ -541,6 +546,59 @@ class Collocation extends React.Component {
     $('.' + s.collContinue + ' span').html('&nbsp;')
     $('#entry').focus()
     this.props.done()
+  }
+}
+
+class Statistics extends React.Component {
+  render() {
+    return (
+      <div className={s.container}>
+        <h1 className={s.title}>Progress</h1>
+        <p>You have made some amazing progress!</p>
+        <table className={s.table}>
+          <tbody>
+            <tr>
+              <td>Words learned</td>
+              <td>7 words</td>
+            </tr>
+            <tr>
+              <td>Current vocabulary size</td>
+              <td>2486 words</td>
+            </tr>
+            <tr>
+              <td>Language level</td>
+              <td>Elementary (A2)</td>
+            </tr>
+            <tr>
+              <td>Next level</td>
+              <td>Intermediate (B1) after <strong>24</strong> more words</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Friends</h3>
+        <table className={s.table}>
+          <tbody>
+            <tr>
+              <td>Michel Saleh</td>
+              <td>1689 words</td>
+            </tr>
+            <tr>
+              <td>Suhas Vijayakumar</td>
+              <td>2482 words <strong>(passed!)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>You</strong></td>
+              <td><strong>2486 words</strong></td>
+            </tr>
+            <tr>
+              <td>Mariya Khudyakova</td>
+              <td>4117 words</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><span className={s.link} onClick={this.props.reset}>Want to learn more words?</span></p>
+      </div>
+    )
   }
 }
 

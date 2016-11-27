@@ -257,6 +257,24 @@ span.wordNormal:hover {
   cursor: pointer;
 }
 
+.collContinue span:hover {
+  text-decoration: underline;
+}
+
 .collPrePost span {
   cursor: pointer;
+}
+
+.table tr td:first-child {
+  width: 200px;
+}
+
+.link {
+  color: #377732;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
 }
