@@ -490,6 +490,9 @@ class Collocation extends React.Component {
     let preTrans = [['voorverwarm','verwarm','zet aan'],['voeg toe','zeef','klop']][stage]
     let trans = preTrans[index]
     let elem = evt.target
+    if (elem.parentNode.childNodes.length > 1) {
+      return
+    }
     var text = document.createTextNode(trans + ' - ');
     elem.parentNode.insertBefore(text, elem);
     let mouseout = function() {
@@ -503,6 +506,9 @@ class Collocation extends React.Component {
     let postTrans = [['rek','temperatuur','deur'],['mengsel','kopje','tortilla']][stage]
     let trans = postTrans[index]
     let elem = evt.target
+    if (elem.parentNode.childNodes.length > 1) {
+      return
+    }
     var text = document.createTextNode(' - ' + trans);
     elem.parentNode.insertBefore(text, elem.nextSibling);
     let mouseout = function() {
