@@ -188,3 +188,18 @@ span.wordNormal:hover {
 .doneMatching span:hover {
   text-decoration: underline;
 }
+
+.collLeft {
+  text-align: right;
+  width: 35%;
+}
+
+.collMid {
+  text-align: center;
+  width: 30%;
+}
+
+.collRight {
+  text-align: left;
+  width: 35%;
+}

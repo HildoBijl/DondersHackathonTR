@@ -147,13 +147,14 @@ class Home extends React.Component {
       case 2:
         element = <ShowArticle
           article={this.articles[this.state.articleIndex]}
-          done={this.doneMatching.bind(this)}
+          done={this.goToNextStage.bind(this)}
         />
       case 3:
       case 4:
         element = <Collocation
           article={this.articles[this.state.articleIndex]}
           stage={this.state.stage}
+          done={this.goToNextStage.bind(this)}
         />
       case 5: <h1 className={s.title}>We'll still put some statistics here</h1>
         break;
@@ -179,10 +180,8 @@ class Home extends React.Component {
     articleIndex = 5 // Hardfix overwrite.
     this.setState({articleIndex: articleIndex, stage: 2})
   }
-  doneMatching() {
-    if (this.state.stage != 2)
-      return
-    this.setState({stage: 3})
+  goToNextStage() {
+    this.setState({stage: this.state.stage + 1})
   }
 }
 
@@ -429,6 +428,31 @@ class Image extends React.Component {
       <p>{this.props.word.capitalizeFirstLetter()}</p>
       <div className={s.overlay}/>
     </div>
+  }
+}
+
+class Collocation extends React.Component {
+  constructor() {
+    super()
+  }
+  render() {
+    // Definining words.
+    let stage = this.props.stage - 3
+    let index = [0,3][stage]
+    let pre = [['preheat','heat','turn on'],['add','sift','whisk']][stage]
+    let preTrans = [['voorverwarm','verwarm','zet aan'],['voeg toe','zeef','klop']][stage]
+    let post = [['rack','temperature','door'],['mixture','cup','tortilla']][stage]
+    let postTrans = [['rek','temperatuur','deur'],['mengsel','kopje','tortilla']][stage]
+
+    // Showing stuff.
+    return (
+      <div className={s.container}>
+        <div className={s.collLeft}/>
+        <div className={s.collMid}/>
+        <div className={s.collRight}/>
+        <p>Of the words that you just learned, fill in the right one. It is the word that often ...</p>
+      </div>
+    )
   }
 }
 
