@@ -225,6 +225,8 @@ span.wordNormal:hover {
 
 .collInput {
   text-align: center;
+  margin: 0;
+  width: 90%;
 }
 
 .collAnswer {
