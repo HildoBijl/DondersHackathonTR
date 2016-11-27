@@ -27,7 +27,7 @@ class Header extends React.Component {
           </Link>
           <div className={s.banner}>
             <h1 className={s.bannerTitle}>Anti-random</h1>
-            <p className={s.bannerDesc}>Don't learn random words. Learn what you're interested in.</p>
+            <p className={s.bannerDesc}>Don't learn random words. Learn what matters to you.</p>
           </div>
         </div>
       </div>
