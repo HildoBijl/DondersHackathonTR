@@ -25,7 +25,7 @@ class Conclusions extends React.Component {
             <li>Learning about things that matter to you improves motivation and hence memory retention.</li>
             <li>Learning through collocations makes it easier to apply words than by just learning word translations.</li>
           </ul>
-          <p>Learn words in a way that allows you to use them.</p>
+          <p>Let's use the words that we are learning!</p>
         </div>
       </div>
     );

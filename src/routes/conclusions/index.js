@@ -11,7 +11,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Conclusions from './Conclusions';
 
-const title = 'Conclusions';
+const title = 'Main thoughts';
 
 export default {
 
