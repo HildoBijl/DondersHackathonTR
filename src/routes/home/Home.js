@@ -19,7 +19,7 @@ class Home extends React.Component {
       stage: 0
     }
     // this.state = {
-    //   stage: 5,
+    //   stage: 3,
     //   input: 'I am smelling an apple pie. Hungry...',
     //   articleIndex: 5
     // }
@@ -446,7 +446,6 @@ class Collocation extends React.Component {
   componentDidMount() {
     $('#entry').focus()
     $('#entry').val('')
-    $('.' + s.collContinue + ' span').html('&nbsp;')
     let that = this;
     $(document).keypress(function(e) {
       if(e.which == 13) {
@@ -474,7 +473,7 @@ class Collocation extends React.Component {
         </div>
         <div className={s.collMid}>
           <p className={s.collTitle}>&nbsp;</p>
-          <p className={s.collContinue} onClick={this.finalize.bind(this)}><span>&nbsp;</span></p>
+          <p className={s.collContinue}>&nbsp;<span onClick={this.finalize.bind(this)}>Continue</span>&nbsp;</p>
           <input id="entry" type="text" className={s.collInput}/>
           <div className={s.collAnswer}>
             <div className={s.collImg}>
@@ -536,14 +535,14 @@ class Collocation extends React.Component {
 
     // Showing answer.
     $('.' + s.collAnswer).css('display','block')
-    $('.' + s.collContinue + ' span').html('Continue')
+    $('.' + s.collContinue + ' span').css('display','inline')
     $('#entry').css('background',color)
   }
   finalize() {
     $('#entry').val('')
     $('#entry').css('background','#fff')
     $('.' + s.collAnswer).css('display','none')
-    $('.' + s.collContinue + ' span').html('&nbsp;')
+    $('.' + s.collContinue + ' span').css('display','none')
     $('#entry').focus()
     this.props.done()
   }

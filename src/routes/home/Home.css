@@ -255,6 +255,7 @@ span.wordNormal:hover {
   color: #377732;
   font-weight: bold;
   cursor: pointer;
+  display: none;
 }
 
 .collContinue span:hover {
