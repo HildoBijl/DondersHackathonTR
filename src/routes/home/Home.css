@@ -131,7 +131,7 @@ span.wordNormal:hover {
 }
 
 .img p {
-  margin: 0px;
+  margin: 0;
   width: 100%;
   font-weight: bold;
 }
@@ -189,17 +189,70 @@ span.wordNormal:hover {
   text-decoration: underline;
 }
 
+.coll::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 .collLeft {
+  float: left;
   text-align: right;
   width: 35%;
 }
 
 .collMid {
+  float: left;
   text-align: center;
   width: 30%;
 }
 
 .collRight {
+  float: left;
   text-align: left;
   width: 35%;
+}
+
+.imgContainer::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.collTitle {
+  font-weight: bold;
+}
+
+.collInput {
+  text-align: center;
+}
+
+.collAnswer {
+  display: none;
+}
+
+.collImg {
+  position: relative;
+  margin: 20px 0 0;
+  float: left;
+  text-align: center;
+  height: 154px;
+  width: 100%;
+}
+
+.collImg p {
+  margin: 0;
+  width: 100%;
+  font-weight: bold;
+}
+
+.collContine {
+  clear: both;
+  width: 100%;
+}
+
+.collContinue span {
+  color: #377732;
+  font-weight: bold;
+  cursor: pointer;
 }

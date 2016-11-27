@@ -19,8 +19,8 @@ class Home extends React.Component {
     //   stage: 0
     // }
     this.state = {
-      stage: 2,
-      input: 'I am smelling apple pie. Hungry!',
+      stage: 3,
+      input: 'I am smelling an apple pie. Hungry...',
       articleIndex: 5
     }
     this.articles = [
@@ -129,6 +129,7 @@ class Home extends React.Component {
     ]
   }
   render() {
+    console.log('Rendering with stage ' + this.state.stage)
     let element;
     switch (this.state.stage) {
       case 0:
@@ -149,6 +150,7 @@ class Home extends React.Component {
           article={this.articles[this.state.articleIndex]}
           done={this.goToNextStage.bind(this)}
         />
+        break;
       case 3:
       case 4:
         element = <Collocation
@@ -156,7 +158,9 @@ class Home extends React.Component {
           stage={this.state.stage}
           done={this.goToNextStage.bind(this)}
         />
-      case 5: <h1 className={s.title}>We'll still put some statistics here</h1>
+        break;
+      case 5:
+        element = <h1 className={s.title}>We'll still put some statistics here</h1>
         break;
       default:
         element = <h1 className={s.title}>We're still building this page... Do check back later!</h1>
@@ -181,6 +185,7 @@ class Home extends React.Component {
     this.setState({articleIndex: articleIndex, stage: 2})
   }
   goToNextStage() {
+    console.log('GoToNext')
     this.setState({stage: this.state.stage + 1})
   }
 }
@@ -435,6 +440,17 @@ class Collocation extends React.Component {
   constructor() {
     super()
   }
+  componentDidMount() {
+    $('#entry').focus()
+    $('#entry').val('')
+    $('.' + s.collContinue + ' span').html('&nbsp;')
+    let that = this;
+    $(document).keypress(function(e) {
+      if(e.which == 13) {
+        that.process()
+      }
+    });
+  }
   render() {
     // Definining words.
     let stage = this.props.stage - 3
@@ -443,21 +459,101 @@ class Collocation extends React.Component {
     let preTrans = [['voorverwarm','verwarm','zet aan'],['voeg toe','zeef','klop']][stage]
     let post = [['rack','temperature','door'],['mixture','cup','tortilla']][stage]
     let postTrans = [['rek','temperatuur','deur'],['mengsel','kopje','tortilla']][stage]
+    let image = this.props.article.wordsImages[index]
+    let wordNL = this.props.article.wordsNL[index]
+    let wordEN = this.props.article.wordsEN[index]
 
     // Showing stuff.
     return (
-      <div className={s.container}>
-        <div className={s.collLeft}/>
-        <div className={s.collMid}/>
-        <div className={s.collRight}/>
-        <p>Of the words that you just learned, fill in the right one. It is the word that often ...</p>
+      <div className={[s.container, s.coll].join(' ')}>
+      <p>Of the words that you just learned, fill in the right one. It is the word that often ...</p>
+        <div className={s.collLeft}>
+          <p className={s.collTitle}>follows after:</p>
+          {pre.map((item, index) => { return <p key={index}>{item}</p>})}
+        </div>
+        <div className={s.collMid}>
+          <p className={s.collTitle}>&nbsp;</p>
+          <p className={s.collContinue} onClick={this.finalize.bind(this)}><span>&nbsp;</span></p>
+          <input id="entry" type="text" className={s.collInput}/>
+          <div className={s.collAnswer}>
+            <div className={s.collImg}>
+              <img src={'images/'+image} className={s.wordImg} alt={wordNL}/>
+              <p>{wordNL.capitalizeFirstLetter()}: {wordEN.capitalizeFirstLetter()}</p>
+            </div>
+          </div>
+        </div>
+        <div className={s.collRight}>
+          <p className={s.collTitle}>comes before:</p>
+          {post.map((item, index) => { return <p key={index}>{item}</p>})}
+        </div>
       </div>
     )
+  }
+  process() {
+    // Checking entry.
+    let stage = this.props.stage - 3
+    let index = [0,3][stage]
+    let correctWord = this.props.article.wordsEN[index]
+    let word = $('#entry').val().toLowerCase()
+    console.log('Between ' + word + ' and ' + correctWord + ' is a distance of ' + getStringDistance(word,correctWord))
+    if (word.length == 0) {
+      return
+    }
+    let wrong = Math.min(getStringDistance(word,correctWord), 2)
+    let color = ['#afa','#ffa','#faa'][wrong]
+
+    // Showing answer.
+    $('.' + s.collAnswer).css('display','block')
+    $('.' + s.collContinue + ' span').html('Continue')
+    $('#entry').css('background',color)
+    console.log('processing word ' + word)
+  }
+  finalize() {
+    $('#entry').val('')
+    $('#entry').css('background','#fff')
+    $('.' + s.collAnswer).css('display','none')
+    $('.' + s.collContinue + ' span').html('&nbsp;')
+    $('#entry').focus()
+    this.props.done()
   }
 }
 
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+
+function getStringDistance(a, b){
+  if(a.length == 0) return b.length;
+  if(b.length == 0) return a.length;
+
+  var matrix = [];
+
+  // increment along the first column of each row
+  var i;
+  for(i = 0; i <= b.length; i++){
+    matrix[i] = [i];
+  }
+
+  // increment each column in the first row
+  var j;
+  for(j = 0; j <= a.length; j++){
+    matrix[0][j] = j;
+  }
+
+  // Fill in the rest of the matrix
+  for(i = 1; i <= b.length; i++){
+    for(j = 1; j <= a.length; j++){
+      if(b.charAt(i-1) == a.charAt(j-1)){
+        matrix[i][j] = matrix[i-1][j-1];
+      } else {
+        matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                                Math.min(matrix[i][j-1] + 1, // insertion
+                                         matrix[i-1][j] + 1)); // deletion
+      }
+    }
+  }
+
+  return matrix[b.length][a.length];
+};
 
 export default withStyles(s)(Home);
