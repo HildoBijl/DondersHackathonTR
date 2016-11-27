@@ -456,9 +456,7 @@ class Collocation extends React.Component {
     let stage = this.props.stage - 3
     let index = [0,3][stage]
     let pre = [['preheat','heat','turn on'],['add','sift','whisk']][stage]
-    let preTrans = [['voorverwarm','verwarm','zet aan'],['voeg toe','zeef','klop']][stage]
     let post = [['rack','temperature','door'],['mixture','cup','tortilla']][stage]
-    let postTrans = [['rek','temperatuur','deur'],['mengsel','kopje','tortilla']][stage]
     let image = this.props.article.wordsImages[index]
     let wordNL = this.props.article.wordsNL[index]
     let wordEN = this.props.article.wordsEN[index]
@@ -469,7 +467,7 @@ class Collocation extends React.Component {
       <p>Of the words that you just learned, fill in the right one. It is the word that often ...</p>
         <div className={s.collLeft}>
           <p className={s.collTitle}>follows after:</p>
-          {pre.map((item, index) => { return <p key={index}>{item}</p>})}
+          {pre.map((item, index) => { return <p key={index} className={s.collPrePost} onClick={(evt) => this.clickOnPre(index, evt)}><span>{item}</span></p>})}
         </div>
         <div className={s.collMid}>
           <p className={s.collTitle}>&nbsp;</p>
@@ -484,10 +482,36 @@ class Collocation extends React.Component {
         </div>
         <div className={s.collRight}>
           <p className={s.collTitle}>comes before:</p>
-          {post.map((item, index) => { return <p key={index}>{item}</p>})}
+          {post.map((item, index) => { return <p key={index} className={s.collPrePost} onClick={(evt) => this.clickOnPost(index, evt)}><span>{item}</span></p>})}
         </div>
       </div>
     )
+  }
+  clickOnPre(index, evt) {
+    let stage = this.props.stage - 3
+    let preTrans = [['voorverwarm','verwarm','zet aan'],['voeg toe','zeef','klop']][stage]
+    let trans = preTrans[index]
+    let elem = evt.target
+    var text = document.createTextNode(trans + ' - ');
+    elem.parentNode.insertBefore(text, elem);
+    let mouseout = function() {
+      elem.parentNode.removeChild(text)
+      $(elem.parentElement).off('mouseout', mouseout)
+    }
+    $(elem.parentElement).mouseout(mouseout)
+  }
+  clickOnPost(index, evt) {
+    let stage = this.props.stage - 3
+    let postTrans = [['rek','temperatuur','deur'],['mengsel','kopje','tortilla']][stage]
+    let trans = postTrans[index]
+    let elem = evt.target
+    var text = document.createTextNode(' - ' + trans);
+    elem.parentNode.insertBefore(text, elem.nextSibling);
+    let mouseout = function() {
+      elem.parentNode.removeChild(text)
+      $(elem.parentElement).off('mouseout', mouseout)
+    }
+    $(elem.parentElement).mouseout(mouseout)
   }
   process() {
     // Checking entry.

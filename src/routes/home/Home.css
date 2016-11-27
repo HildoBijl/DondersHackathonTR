@@ -256,3 +256,7 @@ span.wordNormal:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
+.collPrePost span {
+  cursor: pointer;
+}
